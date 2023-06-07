@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Estudiar Vue.js",
+        "complete": true 
+    },
+    {
+        "name": "Crear base de datos",
+        "complete": false 
+    },
+    {
+        "name": "Realizar curso PHP",
+        "complete": true 
+    },
+    {
+        "name": "Entrenar",
+        "complete": true 
+    },
+    {
+        "name": "Leer capitulo 2",
+        "complete": false 
+    }
+]

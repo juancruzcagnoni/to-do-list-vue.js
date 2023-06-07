@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- AOS Animaciones -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Vue.JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div id="app">
+
+                <header data-aos="zoom-in-down">
+                    <div class="d-flex justify-content-between header">
+                        <h1>To-do List</h1>
+                        <div>
+                            <div class="buscador">
+                                <input type="text" v-model="busqueda" placeholder="Buscar">
+                                <label for=""><i class="bi bi-search"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        <!-- Mensaje cuando no se encuentran tareas que coincidan con la búsqueda -->
+                        <p v-if="busqueda && tareasFiltradas.length === 0">No se encontraron tareas que coincidan
+                            con la
+                            búsqueda.</p>
+                        <!-- Mensaje cuando se encuentran tareas que coincidan con la búsqueda -->
+                        <p v-if="busqueda && tareasFiltradas.length > 0">Se encontraron {{ tareasFiltradas.length }}
+                            tarea(s)
+                            que coinciden con la búsqueda.</p>
+                    </div>
+                </header>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 card-container" data-aos="zoom-in-up">
+                        <div class="card pendientes">
+                            <div class="d-flex justify-content-between">
+                                <h2>Pendientes</h2>
+                                <p class="cont">{{ contadorPendientes }}</p>
+                            </div>
+                            <ul>
+                                <div class="agregar">
+                                    <input type="text" v-model="nuevaTarea" placeholder="Ingrese nueva tarea">
+                                    <!-- Botón para agregar una nueva tarea -->
+                                    <button v-on:click="agregarTarea" class="agregar-btn">Agregar</button>
+                                </div>
+
+                                <!-- Lista de tareas pendientes -->
+                                <li v-for="tarea in tareasPendientes" :key="tarea.id" class="item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <i class="bi bi-dot"></i>
+                                            <!-- Si la tarea es la que se está editando, muestra un campo de texto editable -->
+                                            <template v-if="tareaEditada === tarea">
+                                                <input type="text" v-model="tarea.name"
+                                                    @keyup.enter="guardarEdicion(tarea)" class="editado">
+                                            </template>
+                                            <!-- Si la tarea no está siendo editada, muestra el nombre de la tarea -->
+                                            <template v-else>
+                                                <p class="m-0">{{ tarea.name }}</p>
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <!-- Si la tarea no está siendo editada, muestra los botones de cambiar estado y eliminar -->
+                                            <template v-if="tareaEditada !== tarea">
+                                                <button v-on:click="cambiarEstado(tarea)"><i
+                                                        class="bi bi-check-square me-2"></i></button>
+                                                <!-- Botón para editar la tarea -->
+                                                <button v-on:click="editarTarea(tarea)"><i
+                                                        class="bi bi-pencil-square me-2"></i></button>
+                                                <button v-on:click="eliminarTarea(tarea)"><i
+                                                        class="bi bi-trash3"></i></button>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 card-container" data-aos="zoom-in-up">
+                        <div class="card completadas">
+                            <div class="d-flex justify-content-between">
+                                <h2>Completadas</h2>
+                                <p class="cont">{{ contadorCompletadas }}</p>
+                            </div>
+                            <ul>
+                                <!-- Lista de tareas completadas -->
+                                <li v-for="tarea in tareasCompletadas" :key="tarea.id" class="item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <i class="bi bi-dot"></i>
+                                            <p class="m-0">{{ tarea.name }}</p>
+                                        </div>
+                                        <div>
+                                            <!-- Botón para cambiar el estado de la tarea (completada a pendiente) -->
+                                            <button v-on:click="cambiarEstado(tarea)"><i
+                                                    class="bi bi-arrow-counterclockwise me-2"></i></button>
+                                            <!-- Botón para eliminar la tarea -->
+                                            <button v-on:click="eliminarTarea(tarea)"><i
+                                                    class="bi bi-trash3"></i></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Juan Cruz Cagnoni - 2023 - Aplicaciones para Dispositivos Moviles</p>
+    </footer>
+
+    <!-- Bootstrap Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <!-- Javascript -->
+    <script src="app.js"></script>
+    <!-- AOS Animaciones  -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
