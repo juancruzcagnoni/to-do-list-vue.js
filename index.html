@@ -68,7 +68,7 @@
                                             <i class="bi bi-dot"></i>
                                             <!-- Si la tarea es la que se está editando, muestra un campo de texto editable -->
                                             <template v-if="tareaEditada === tarea">
-                                                <input type="text" v-model="tarea.name"
+                                                <input type="text" v-model="tarea.nombre"
                                                     @keyup.enter="guardarEdicion(tarea)" class="editado">
                                             </template>
                                             <!-- Si la tarea no está siendo editada, muestra el nombre de la tarea -->
