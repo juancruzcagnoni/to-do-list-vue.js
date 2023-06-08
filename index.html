@@ -29,7 +29,7 @@
                     <div class="d-flex justify-content-between header">
                         <h1>To-do List</h1>
                         <div>
-                            <div class="buscador">
+                            <div class="buscador d-flex justify-content-between">
                                 <input type="text" v-model="busqueda" placeholder="Buscar">
                                 <label for=""><i class="bi bi-search"></i></label>
                             </div>
@@ -73,7 +73,7 @@
                                             </template>
                                             <!-- Si la tarea no está siendo editada, muestra el nombre de la tarea -->
                                             <template v-else>
-                                                <p class="m-0">{{ tarea.name }}</p>
+                                                <p class="m-0">{{ tarea.nombre }}</p>
                                             </template>
                                         </div>
                                         <div>
@@ -106,7 +106,7 @@
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex">
                                             <i class="bi bi-dot"></i>
-                                            <p class="m-0">{{ tarea.name }}</p>
+                                            <p class="m-0">{{ tarea.nombre }}</p>
                                         </div>
                                         <div>
                                             <!-- Botón para cambiar el estado de la tarea (completada a pendiente) -->

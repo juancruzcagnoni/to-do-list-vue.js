@@ -14,11 +14,11 @@ new Vue({
   computed: {
     tareasPendientes() {
       // Propiedad computada para obtener las tareas pendientes.
-      return this.tareas.filter((tarea) => !tarea.complete);
+      return this.tareas.filter((tarea) => !tarea.completada);
     },
     tareasCompletadas() {
       // Propiedad computada para obtener las tareas completadas.
-      return this.tareas.filter((tarea) => tarea.complete);
+      return this.tareas.filter((tarea) => tarea.completada);
     },
     contadorPendientes() {
       // Propiedad computada para obtener el contador de tareas pendientes.
@@ -30,7 +30,7 @@ new Vue({
     },
     tareasFiltradas() {
       return this.tareas.filter((tarea) => {
-        return tarea.name.toLowerCase().includes(this.busqueda.toLowerCase());
+        return tarea.nombre.toLowerCase().includes(this.busqueda.toLowerCase());
       });
     },
   },
@@ -48,16 +48,16 @@ new Vue({
     },
     agregarTarea() {
       // Método para agregar una nueva tarea.
-      const nuevaTareaObjeto = {
-        name: this.nuevaTarea,
-        complete: false,
+      const nuevaTarea = {
+        nombre: this.nuevaTarea,
+        completada: false,
       };
-      Vue.set(this.tareas, this.tareas.length, nuevaTareaObjeto); // Agrega la nueva tarea al array tareas.
+      Vue.set(this.tareas, this.tareas.length, nuevaTarea); // Agrega la nueva tarea al array tareas.
       this.nuevaTarea = ""; // Reinicia el valor del input de nueva tarea.
     },
     cambiarEstado(tarea) {
       // Método para cambiar el estado de una tarea.
-      tarea.complete = !tarea.complete; // Invierte el valor del atributo complete de la tarea.
+      tarea.completada = !tarea.completada; // Invierte el valor del atributo completada de la tarea.
     },
     eliminarTarea(tarea) {
       // Método para eliminar una tarea.
@@ -67,7 +67,7 @@ new Vue({
     editarTarea(tarea) {
       this.tareaEditada = tarea;
     },
-    guardarEdicion(tarea) {
+    guardarEdicion() {
       this.tareaEditada = null;
     },
   },

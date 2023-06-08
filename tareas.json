@@ -1,22 +1,22 @@
 [
     {
-        "name": "Estudiar Vue.js",
-        "complete": true 
+        "nombre": "Estudiar Vue.js",
+        "completada": true 
     },
     {
-        "name": "Crear base de datos",
-        "complete": false 
+        "nombre": "Crear base de datos",
+        "completada": false 
     },
     {
-        "name": "Realizar curso PHP",
-        "complete": true 
+        "nombre": "Realizar curso PHP",
+        "completada": true 
     },
     {
-        "name": "Entrenar",
-        "complete": true 
+        "nombre": "Entrenar",
+        "completada": true 
     },
     {
-        "name": "Leer capitulo 2",
-        "complete": false 
+        "nombre": "Leer capitulo 2",
+        "completada": false 
     }
 ]
